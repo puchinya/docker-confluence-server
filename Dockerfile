@@ -65,8 +65,8 @@ RUN set -x \
 USER ${RUN_USER}:${RUN_GROUP}
 
 ADD ./server.xml ${CONFLUENCE_INSTALL}/conf/server.xml.org
-ADD ./startup.sh ${CONFLUENCE_INSTALL}/startup.sh
-RUN chmod u+x ${CONFLUENCE_INSTALL}/startup.sh
+ADD ./bootstrap.sh ${CONFLUENCE_INSTALL}/bin/bootstrap.sh
+RUN chmod u+x ${CONFLUENCE_INSTALL}/bin/bootstrap.sh
 
 # Expose default HTTP connector port.
 EXPOSE 8090
@@ -81,4 +81,4 @@ VOLUME ["${CONFLUENCE_INSTALL}", "${CONFLUENCE_HOME}"]
 WORKDIR ${CONFLUENCE_INSTALL}
 
 # Run Atlassian Confluence as a foreground process by default.
-CMD ["./startup.sh"]
+CMD ["./bin/bootstrap.sh"]
