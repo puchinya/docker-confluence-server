@@ -66,7 +66,8 @@ USER ${RUN_USER}:${RUN_GROUP}
 
 ADD ./server.xml ${CONFLUENCE_INSTALL}/conf/server.xml.org
 ADD ./bootstrap.sh ${CONFLUENCE_INSTALL}/bin/bootstrap.sh
-RUN chmod u+x ${CONFLUENCE_INSTALL}/bin/bootstrap.sh
+RUN chmod 700 ${CONFLUENCE_INSTALL}/bin/bootstrap.sh
+RUN chown ${RUN_USER}:${RUN_GROUP} ${CONFLUENCE_INSTALL}/bin/bootstrap.sh
 
 # Expose default HTTP connector port.
 EXPOSE 8090
