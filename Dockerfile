@@ -7,7 +7,7 @@ ENV CONFLUENCE_HOME     /var/atlassian/application-data/confluence
 ENV CONFLUENCE_INSTALL  /opt/atlassian/confluence
 ENV CONF_VERSION  6.1.0
 
-ARG CONFLUENCE_PROXY_NAME="www.daradara.net"
+ARG CONFLUENCE_PROXY_NAME="localhost"
 ARG CONFLUENCE_PROXY_PORT="443"
 ARG CONFLUENCE_SCHEME="https"
 ARG CONFLUENCE_SECURE="true"
