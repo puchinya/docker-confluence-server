@@ -64,9 +64,9 @@ RUN set -x \
 # here we only ever run one process anyway.
 USER ${RUN_USER}:${RUN_GROUP}
 
-COPY ./server.xml ${CONFLUENCE_INSTALL}/conf/server.xml.org
-COPY ./startup.sh ${CONFLUENCE_INSTALL}/startup.sh
-RUN chmod +x ${CONFLUENCE_INSTALL}/startup.sh
+ADD ./server.xml ${CONFLUENCE_INSTALL}/conf/server.xml.org
+ADD ./startup.sh ${CONFLUENCE_INSTALL}/startup.sh
+RUN chmod u+x ${CONFLUENCE_INSTALL}/startup.sh
 
 # Expose default HTTP connector port.
 EXPOSE 8090
@@ -81,4 +81,4 @@ VOLUME ["${CONFLUENCE_INSTALL}", "${CONFLUENCE_HOME}"]
 WORKDIR ${CONFLUENCE_INSTALL}
 
 # Run Atlassian Confluence as a foreground process by default.
-CMD ["./startup.sh", "run"]
+CMD ["./startup.sh"]
