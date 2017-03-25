@@ -7,10 +7,10 @@ ENV CONFLUENCE_HOME     /var/atlassian/application-data/confluence
 ENV CONFLUENCE_INSTALL  /opt/atlassian/confluence
 ENV CONF_VERSION  6.1.0
 
-ARG CONFLUENCE_PROXY_NAME="localhost"
-ARG CONFLUENCE_PROXY_PORT="443"
-ARG CONFLUENCE_SCHEME="https"
-ARG CONFLUENCE_SECURE="true"
+ENV CONFLUENCE_PROXY_NAME="localhost"
+ENV CONFLUENCE_PROXY_PORT="443"
+ENV CONFLUENCE_SCHEME="https"
+ENV CONFLUENCE_SECURE="true"
 
 LABEL Description="This image is used to start Atlassian Confluence" Vendor="Atlassian" Version="${CONF_VERSION}"
 
