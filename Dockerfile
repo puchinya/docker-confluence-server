@@ -64,11 +64,9 @@ RUN set -x \
 # here we only ever run one process anyway.
 USER ${RUN_USER}:${RUN_GROUP}
 
-COPY ./server.xml ${CONFLUENCE_INSTALL}/conf/server.xml
-RUN sed -i -e "4s/%proxyName%/${CONFLUENCE_PROXY_NAME}/" ${CONFLUENCE_INSTALL}/conf/server.xml
-RUN sed -i -e "4s/%proxyPort%/${CONFLUENCE_PROXY_PORT}/" ${CONFLUENCE_INSTALL}/conf/server.xml
-RUN sed -i -e "4s/%scheme%/${CONFLUENCE_SCHEME}/" ${CONFLUENCE_INSTALL}/conf/server.xml
-RUN sed -i -e "4s/%secure%/${CONFLUENCE_SECURE}/" ${CONFLUENCE_INSTALL}/conf/server.xml
+COPY ./server.xml ${CONFLUENCE_INSTALL}/conf/server.xml.org
+COPY ./startup.sh ${CONFLUENCE_INSTALL}/startup.sh
+RUN chmod +x ${CONFLUENCE_INSTALL}/startup.sh
 
 # Expose default HTTP connector port.
 EXPOSE 8090
@@ -83,4 +81,4 @@ VOLUME ["${CONFLUENCE_INSTALL}", "${CONFLUENCE_HOME}"]
 WORKDIR ${CONFLUENCE_INSTALL}
 
 # Run Atlassian Confluence as a foreground process by default.
-CMD ["./bin/catalina.sh", "run"]
+CMD ["./startup.sh", "run"]
