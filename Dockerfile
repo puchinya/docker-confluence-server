@@ -73,8 +73,8 @@ RUN mv ${IPAFONT_FILE_NAME_NOEXT} /usr/share/fonts/truetype/
 RUN fc-cache
 
 # link to JRE fonts
-RUN mkdir -p ${JAVA_HOME}/jre/lib/fonts/fallback
-RUN (cd ${JAVA_HOME}/jre/lib/fonts/fallback;ln -s /usr/share/fonts/truetype/${IPAFONT_FILE_NAME_NOEXT}/ipag.ttf;ln -s /usr/share/fonts/truetype/${IPAFONT_FILE_NAME_NOEXT}/ipagp.ttf;ln -s /usr/share/fonts/truetype/${IPAFONT_FILE_NAME_NOEXT}/ipam.ttf;ln -s /usr/share/fonts/truetype/${IPAFONT_FILE_NAME_NOEXT}/ipamp.ttf)
+RUN mkdir -p ${JAVA_HOME}/lib/fonts/fallback
+RUN (cd ${JAVA_HOME}/lib/fonts/fallback;ln -s /usr/share/fonts/truetype/${IPAFONT_FILE_NAME_NOEXT}/ipag.ttf;ln -s /usr/share/fonts/truetype/${IPAFONT_FILE_NAME_NOEXT}/ipagp.ttf;ln -s /usr/share/fonts/truetype/${IPAFONT_FILE_NAME_NOEXT}/ipam.ttf;ln -s /usr/share/fonts/truetype/${IPAFONT_FILE_NAME_NOEXT}/ipamp.ttf)
 
 # Use the default unprivileged account. This could be considered bad practice
 # on systems where multiple processes end up being executed by 'daemon' but
