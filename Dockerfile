@@ -59,6 +59,8 @@ RUN set -x \
                                           "${CONFLUENCE_INSTALL}/conf/server.xml" \
     && touch -d "@0"                      "${CONFLUENCE_INSTALL}/conf/server.xml"
 
+RUN apt-get install --quiet --yes graphviz
+
 # Use the default unprivileged account. This could be considered bad practice
 # on systems where multiple processes end up being executed by 'daemon' but
 # here we only ever run one process anyway.
