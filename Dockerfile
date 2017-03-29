@@ -62,7 +62,7 @@ RUN apt-get install --quiet --yes graphviz
 RUN apt-get install --quiet --yes fontconfig
 
 ENV TAKAOFONT_DOWNLOAD_URL https://launchpad.net/takao-fonts/trunk/15.03/+download/TakaoFonts_00303.01.zip
-ENV TAKAOFONT_FILE_NAME_NOEXT takao
+ENV TAKAOFONT_FILE_NAME_NOEXT TakaoFonts_00303.01
 ENV TAKAOFONT_FILE_NAME ${TAKAOFONT_FILE_NAME_NOEXT}.zip
 
 ENV CATALINA_OPTS=-Dconfluence.document.conversion.fontpath=/usr/share/fonts/truetype/${TAKAOFONT_FILE_NAME_NOEXT}/ -Dconfluence.document.conversion.words.defaultfontname=/usr/share/fonts/truetype/TakaoPGothic.ttf
