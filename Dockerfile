@@ -25,7 +25,6 @@ ENV MYSQL_DRIVER_DOWNLOAD_URL http://dev.mysql.com/get/Downloads/Connector-J/mys
 ENV RUN_USER            daemon
 ENV RUN_GROUP           daemon
 
-
 # Install Atlassian Confluence and helper tools and setup initial home
 # directory structure.
 RUN set -x \
@@ -62,19 +61,21 @@ RUN set -x \
 RUN apt-get install --quiet --yes graphviz
 RUN apt-get install --quiet --yes fontconfig
 
-ENV IPAFONT_DOWNLOAD_URL http://ipafont.ipa.go.jp/old/ipafont/IPAfont00303.php
-ENV IPAFONT_FILE_NAME_NOEXT IPAfont00303
-ENV IPAFONT_FILE_NAME ${IPAFONT_FILE_NAME_NOEXT}.zip
+ENV TAKAOFONT_DOWNLOAD_URL https://launchpad.net/takao-fonts/trunk/15.03/+download/TakaoFonts_00303.01.zip
+ENV TAKAOFONT_FILE_NAME_NOEXT takao
+ENV TAKAOFONT_FILE_NAME ${TAKAOFONT_FILE_NAME_NOEXT}.zip
 
-# Install IPA Font for Japanese
-RUN wget -O ${IPAFONT_FILE_NAME} ${IPAFONT_DOWNLOAD_URL}
-RUN unzip ${IPAFONT_FILE_NAME}
-RUN mv ${IPAFONT_FILE_NAME_NOEXT} /usr/share/fonts/truetype/
-RUN fc-cache
+ENV CATALINA_OPTS=-Dconfluence.document.conversion.fontpath=/usr/share/fonts/truetype/${TAKAOFONT_FILE_NAME_NOEXT}/TakaoGothic.ttf -Dconfluence.document.conversion.words.defaultfontname=/usr/share/fonts/truetype/${TAKAOFONT_FILE_NAME_NOEXT}/TakaoGothic.ttf
+
+# Install Takao Font for Japanese
+RUN wget -O ${TAKAOFONT_FILE_NAME} ${TAKAOFONT_DOWNLOAD_URL}
+RUN unzip ${TAKAOFONT_FILE_NAME}
+RUN mv ${TAKAOFONT_FILE_NAME_NOEXT} /usr/share/fonts/truetype/
+RUN fc-cache -f -v
 
 # link to JRE fonts
 RUN mkdir -p ${JAVA_HOME}/lib/fonts/fallback
-RUN (cd ${JAVA_HOME}/lib/fonts/fallback;ln -s /usr/share/fonts/truetype/${IPAFONT_FILE_NAME_NOEXT}/ipag.ttf;ln -s /usr/share/fonts/truetype/${IPAFONT_FILE_NAME_NOEXT}/ipagp.ttf;ln -s /usr/share/fonts/truetype/${IPAFONT_FILE_NAME_NOEXT}/ipam.ttf;ln -s /usr/share/fonts/truetype/${IPAFONT_FILE_NAME_NOEXT}/ipamp.ttf)
+RUN (cd ${JAVA_HOME}/lib/fonts/fallback;ln -s /usr/share/fonts/truetype/${TAKAOFONT_FILE_NAME_NOEXT}/TakaoGothic.ttf;ln -s /usr/share/fonts/truetype/${TAKAOFONT_FILE_NAME_NOEXT}/TakaoMincho.ttf;ln -s /usr/share/fonts/truetype/${TAKAOFONT_FILE_NAME_NOEXT}/TakaoPGothic.ttf;ln -s /usr/share/fonts/truetype/${TAKAOFONT_FILE_NAME_NOEXT}/TakaoPMincho.ttf)
 
 # Use the default unprivileged account. This could be considered bad practice
 # on systems where multiple processes end up being executed by 'daemon' but
