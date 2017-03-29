@@ -65,7 +65,7 @@ ENV TAKAOFONT_DOWNLOAD_URL https://launchpad.net/takao-fonts/trunk/15.03/+downlo
 ENV TAKAOFONT_FILE_NAME_NOEXT takao
 ENV TAKAOFONT_FILE_NAME ${TAKAOFONT_FILE_NAME_NOEXT}.zip
 
-ENV CATALINA_OPTS=-Dconfluence.document.conversion.fontpath=/usr/share/fonts/truetype/${TAKAOFONT_FILE_NAME_NOEXT}/TakaoGothic.ttf -Dconfluence.document.conversion.words.defaultfontname=/usr/share/fonts/truetype/${TAKAOFONT_FILE_NAME_NOEXT}/TakaoGothic.ttf
+ENV CATALINA_OPTS=-Dconfluence.document.conversion.fontpath=/usr/share/fonts/truetype/${TAKAOFONT_FILE_NAME_NOEXT} -Dconfluence.document.conversion.words.defaultfontname=/usr/share/fonts/truetype/TakaoPGothic.ttf
 
 # Install Takao Font for Japanese
 RUN wget -O ${TAKAOFONT_FILE_NAME} ${TAKAOFONT_DOWNLOAD_URL}
