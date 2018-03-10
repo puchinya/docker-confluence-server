@@ -1,6 +1,7 @@
 # docker-confluence-server
 1.Support reverse proxy  
-2.install graphvis for PlantUML Add-in.  
+2.Install graphvis for PlantUML Add-in.  
+3.Install TakaoFont for Japanese
 
 Enviroments  
 CONFLUENCE_PROXY_NAME=localhost  
