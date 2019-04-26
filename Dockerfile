@@ -1,5 +1,5 @@
 
-FROM java:openjdk-8-jre
+FROM openjdk:8-alpine
 MAINTAINER puchinya
 
 # Setup useful environment variables
