@@ -5,7 +5,7 @@ MAINTAINER puchinya
 # Setup useful environment variables
 ENV CONFLUENCE_HOME     /var/atlassian/application-data/confluence
 ENV CONFLUENCE_INSTALL  /opt/atlassian/confluence
-ENV CONF_VERSION  6.9.3
+ENV CONF_VERSION  6.10.2
 
 ENV CONFLUENCE_PROXY_NAME="localhost"
 ENV CONFLUENCE_PROXY_PORT="443"
@@ -16,7 +16,7 @@ LABEL Description="This image is used to start Atlassian Confluence" Vendor="Atl
 
 ENV CONFLUENCE_DOWNLOAD_URL http://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-${CONF_VERSION}.tar.gz
 
-ENV MYSQL_VERSION 5.1.38
+ENV MYSQL_VERSION 5.1.44
 ENV MYSQL_DRIVER_DOWNLOAD_URL http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-${MYSQL_VERSION}.tar.gz
 
 # Use the default unprivileged account. This could be considered bad practice
