@@ -28,9 +28,7 @@ ENV RUN_GROUP           daemon
 # Install Atlassian Confluence and helper tools and setup initial home
 # directory structure.
 RUN set -x \
-    && apt-get update --quiet \
-    && apt-get install --quiet --yes --no-install-recommends libtcnative-1 xmlstarlet \
-    && apt-get clean \
+    && apk --no-cache add curl xmlstarlet bash ttf-dejavu libc6-compat gcompat \
     && mkdir -p                           "${CONFLUENCE_HOME}" \
     && chmod -R 700                       "${CONFLUENCE_HOME}" \
     && chown ${RUN_USER}:${RUN_GROUP}     "${CONFLUENCE_HOME}" \
@@ -58,8 +56,8 @@ RUN set -x \
                                           "${CONFLUENCE_INSTALL}/conf/server.xml" \
     && touch -d "@0"                      "${CONFLUENCE_INSTALL}/conf/server.xml"
 
-RUN apt-get install --quiet --yes graphviz
-RUN apt-get install --quiet --yes fontconfig
+RUN apk --no-cache add graphviz
+RUN apk --no-cache add fontconfig
 
 ENV TAKAOFONT_DOWNLOAD_URL https://launchpad.net/takao-fonts/trunk/15.03/+download/TakaoFonts_00303.01.zip
 ENV TAKAOFONT_FILE_NAME_NOEXT TakaoFonts_00303.01
