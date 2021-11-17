@@ -1,11 +1,11 @@
 
-FROM openjdk:8-alpine
+FROM adoptopenjdk/openjdk11
 MAINTAINER puchinya
 
 # Setup useful environment variables
 ENV CONFLUENCE_HOME     /var/atlassian/application-data/confluence
 ENV CONFLUENCE_INSTALL  /opt/atlassian/confluence
-ENV CONF_VERSION  6.15.4
+ENV CONF_VERSION  7.13.2
 
 ENV CONFLUENCE_PROXY_NAME="localhost"
 ENV CONFLUENCE_PROXY_PORT="443"
@@ -25,11 +25,14 @@ ENV MYSQL_DRIVER_DOWNLOAD_URL http://dev.mysql.com/get/Downloads/Connector-J/mys
 ENV RUN_USER            daemon
 ENV RUN_GROUP           daemon
 
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && apt-get install -y --no-install-recommends curl fontconfig fonts-noto python3 python3-jinja2 tini unzip wget xmlstarlet graphviz \
+    && apt-get clean autoclean && apt-get autoremove -y && rm -rf /var/lib/apt/lists/*
+
 # Install Atlassian Confluence and helper tools and setup initial home
 # directory structure.
-RUN set -x \
-    && apk --no-cache add curl xmlstarlet bash ttf-dejavu libc6-compat gcompat \
-    && mkdir -p                           "${CONFLUENCE_HOME}" \
+RUN mkdir -p                           "${CONFLUENCE_HOME}" \
     && chmod -R 700                       "${CONFLUENCE_HOME}" \
     && chown ${RUN_USER}:${RUN_GROUP}     "${CONFLUENCE_HOME}" \
     && mkdir -p                           "${CONFLUENCE_INSTALL}/conf" \
@@ -56,9 +59,6 @@ RUN set -x \
                                           "${CONFLUENCE_INSTALL}/conf/server.xml" \
     && touch -d "@0"                      "${CONFLUENCE_INSTALL}/conf/server.xml"
 
-RUN apk --no-cache add graphviz
-RUN apk --no-cache add fontconfig
-
 ENV TAKAOFONT_DOWNLOAD_URL https://launchpad.net/takao-fonts/trunk/15.03/+download/TakaoFonts_00303.01.zip
 ENV TAKAOFONT_FILE_NAME_NOEXT TakaoFonts_00303.01
 ENV TAKAOFONT_FILE_NAME ${TAKAOFONT_FILE_NAME_NOEXT}.zip
@@ -74,6 +74,10 @@ RUN fc-cache -f -v
 # link to JRE fonts
 RUN mkdir -p ${JAVA_HOME}/lib/fonts/fallback
 RUN (cd ${JAVA_HOME}/lib/fonts/fallback;ln -s /usr/share/fonts/truetype/${TAKAOFONT_FILE_NAME_NOEXT}/TakaoGothic.ttf;ln -s /usr/share/fonts/truetype/${TAKAOFONT_FILE_NAME_NOEXT}/TakaoMincho.ttf;ln -s /usr/share/fonts/truetype/${TAKAOFONT_FILE_NAME_NOEXT}/TakaoPGothic.ttf;ln -s /usr/share/fonts/truetype/${TAKAOFONT_FILE_NAME_NOEXT}/TakaoPMincho.ttf)
+
+RUN curl http://secure.globalsign.com/cacert/gsrsaovsslca2018.crt --output gsrsaovsslca2018.crt \
+    && keytool -import -cacerts -storepass changeit -alias GlobalSignRootCA -file gsrsaovsslca2018.crt \
+    && rm -f gsrsaovsslca2018.crt
 
 # Use the default unprivileged account. This could be considered bad practice
 # on systems where multiple processes end up being executed by 'daemon' but
