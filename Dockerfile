@@ -16,7 +16,7 @@ LABEL Description="This image is used to start Atlassian Confluence" Vendor="Atl
 
 ENV CONFLUENCE_DOWNLOAD_URL http://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-${CONF_VERSION}.tar.gz
 
-ENV MYSQL_VERSION 5.1.44
+ENV MYSQL_VERSION 5.1.48
 ENV MYSQL_DRIVER_DOWNLOAD_URL http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-${MYSQL_VERSION}.tar.gz
 
 # Use the default unprivileged account. This could be considered bad practice
